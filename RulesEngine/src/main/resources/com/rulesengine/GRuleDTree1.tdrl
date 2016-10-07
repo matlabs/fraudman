@@ -1,0 +1,16 @@
+package com.rulesengine;
+
+rule "GRuleDTree1_0"
+	when 
+		ord : OrderRequest(bc : billingCountry != null, billingCountry == "US")
+	then 
+		ord.setAction( "None" );
+		ord.setNotes( "Billing Country US " );
+end
+rule "GRuleDTree1_1"
+	when 
+		ord : OrderRequest(bc : billingCountry != null, cc : CCCountry != null, IPCountry != null)
+	then 
+		ord.setNotes( "Billing / IP / CC Country Null Check" );
+		ord.setAction( "None" );
+end

@@ -1,0 +1,120 @@
+package com.rulesengine;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.List;
+import java.util.ArrayList;
+
+function List<String> loadMailContent(String email) {
+    String regex = "^(.+)@(.+)$";
+    List<String> mailContent = new ArrayList<String>();
+    Pattern pattern = Pattern.compile(regex);
+    Matcher matcher = pattern.matcher(email);
+    boolean status = false;
+    if(matcher.matches()) {
+        mailContent.add(matcher.group(1));
+        mailContent.add(matcher.group(2));
+    }
+    return mailContent;
+}
+
+function boolean validateEmail(String email,String surname) {
+    String regex = "^(.+)@(.+)$";
+    Pattern pattern = Pattern.compile(regex);
+    Matcher matcher = pattern.matcher(email);
+    boolean status = false;
+    if(matcher.matches()) {
+        String firstPart = matcher.group(1);
+        String lastPart = matcher.group(2);
+        boolean firstPartStatus = containsSurName(surname,firstPart);
+        if(firstPartStatus && emailDomainCheck(lastPart)) {
+            status=true;
+        }
+    }
+    return status;
+}
+
+
+
+function boolean emailDomainCheck(String email) {
+    boolean status = false;
+    if(null != email) {
+    List<String> mail = loadMailContent(email);
+    if(null != mail && mail.size() > 1) {
+        String emaildomain = mail.get(1);
+        if("radial.com".equalsIgnoreCase(emaildomain) || "radial.org".equalsIgnoreCase(emaildomain)) {
+            status = true;
+        }
+      }
+    }
+    return status;
+}
+
+
+
+function boolean containsSurName(String email, String surname) {
+    boolean status = false;
+    if(null != surname && null != email) {
+         List<String> mail = loadMailContent(email);
+         if(null != mail && mail.size() > 0) {
+        String emailFirstPart = mail.get(0);
+        if(emailFirstPart.compareToIgnoreCase(surname) > 0) {
+            status = true;
+        }
+      }
+    }
+    return status;                   
+}
+
+rule "FORR Rule3Email"
+	dialect "java"
+	when
+		OrderReq: OrderRequest( containsSurName(email,billingSurName) && emailDomainCheck(email))
+	then
+        AuditTrail trail = new AuditTrail();
+        	trail.setRule("Rule3Email");
+            trail.setAction("Held for Screening");
+            trail.setNotes("Meets all conditions");
+            trail.setScore(-10);
+        //allAuditTrails.add(trail); 
+        OrderReq.getAudit().add(trail);
+		OrderReq.setAction( "Held for Screening" );
+		OrderReq.setNotes( "Meets all conditions" );
+		insert( OrderReq );
+end
+
+rule "FORR Rule3EmailSurName"
+	dialect "java"
+	when
+		OrderReq: OrderRequest(!containsSurName(email,billingSurName))
+	then
+    
+        AuditTrail trail = new AuditTrail();
+        	trail.setRule("Rule3EmailSurName");
+            trail.setAction("None");
+            trail.setNotes("Surname not contained in email");
+            trail.setScore(-10);
+        //allAuditTrails.add(trail); 
+        OrderReq.getAudit().add(trail);
+		OrderReq.setAction( "None" );
+		OrderReq.setNotes( "Surname not contained in email" );
+		insert( OrderReq );
+end
+
+rule "FORR Rule3EmailDomainName"
+	dialect "java"
+	when
+		OrderReq: OrderRequest(!emailDomainCheck(email))
+	then
+    
+        AuditTrail trail = new AuditTrail();
+        	trail.setRule("Rule3EmailDomainName");
+            trail.setAction("None");
+            trail.setNotes("Email Domain not in list");
+            trail.setScore(-10);
+        //allAuditTrails.add(trail); 
+        OrderReq.getAudit().add(trail);
+		OrderReq.setAction( "None" );
+		OrderReq.setNotes( "Email Domain not in list" );
+		insert( OrderReq );
+end

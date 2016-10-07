@@ -1,0 +1,60 @@
+<scenario>
+  <name>Rule2 Row2.scenario</name>
+  <maxRuleFirings>100000</maxRuleFirings>
+  <globals/>
+  <fixtures>
+    <fact-data>
+      <type>OrderRequest</type>
+      <fieldData>
+        <field-data>
+          <name>productName</name>
+          <value>My First Bicycle in Red</value>
+          <nature>4</nature>
+        </field-data>
+        <field-data>
+          <name>shippingMethod</name>
+          <value>Ground</value>
+          <nature>4</nature>
+        </field-data>
+        <field-data>
+          <name>emailTotalApproves</name>
+          <value>0</value>
+          <nature>4</nature>
+        </field-data>
+      </fieldData>
+      <name>order</name>
+      <isModify>false</isModify>
+    </fact-data>
+    <execution-trace>
+      <executionTimeResult>59</executionTimeResult>
+      <numberOfRulesFired>1</numberOfRulesFired>
+    </execution-trace>
+    <expect-fact>
+      <fieldValues>
+        <expect-field>
+          <fieldName>notes</fieldName>
+          <expected>Does not meet Product Name</expected>
+          <actualResult></actualResult>
+          <successResult>true</successResult>
+          <explanation>[order] field [notes] was [Does not meet Product Name].</explanation>
+          <operator>==</operator>
+          <nature>1</nature>
+        </expect-field>
+      </fieldValues>
+      <name>order</name>
+      <anonymous>false</anonymous>
+    </expect-fact>
+  </fixtures>
+  <lastRunResult>2016-10-04 12:04:25.864 UTC</lastRunResult>
+  <rules>
+    <string>Row 2 GRule2DT</string>
+  </rules>
+  <inclusive>true</inclusive>
+  <packageName>com.rulesengine</packageName>
+  <imports>
+    <imports/>
+  </imports>
+  <ksessions>
+    <string>defaultKieSession</string>
+  </ksessions>
+</scenario>

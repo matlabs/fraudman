@@ -1,0 +1,66 @@
+<scenario>
+  <name>GRule1 Test.scenario</name>
+  <maxRuleFirings>100000</maxRuleFirings>
+  <globals/>
+  <fixtures>
+    <fact-data>
+      <type>OrderRequest</type>
+      <fieldData>
+        <field-data>
+          <fieldName>billing</fieldName>
+          <fact>
+            <type>Billing</type>
+            <fieldData>
+              <field-data>
+                <fieldName>address</fieldName>
+                <fact>
+                  <type>Address</type>
+                  <fieldData>
+                    <field-data>
+                      <name>countryName</name>
+                      <value>US</value>
+                      <nature>4</nature>
+                    </field-data>
+                  </fieldData>
+                </fact>
+              </field-data>
+            </fieldData>
+          </fact>
+        </field-data>
+      </fieldData>
+      <name>Order</name>
+      <isModify>false</isModify>
+    </fact-data>
+    <execution-trace>
+      <executionTimeResult>24</executionTimeResult>
+      <numberOfRulesFired>0</numberOfRulesFired>
+    </execution-trace>
+    <expect-fact>
+      <fieldValues>
+        <expect-field>
+          <fieldName>notes</fieldName>
+          <expected>Country US</expected>
+          <actualResult></actualResult>
+          <successResult>false</successResult>
+          <explanation>[Order] field [notes] was [] expected [Country US].</explanation>
+          <operator>==</operator>
+          <nature>1</nature>
+        </expect-field>
+      </fieldValues>
+      <name>Order</name>
+      <anonymous>false</anonymous>
+    </expect-fact>
+  </fixtures>
+  <lastRunResult>2016-09-19 04:40:00.558 UTC</lastRunResult>
+  <rules>
+    <string>GRule1</string>
+  </rules>
+  <inclusive>true</inclusive>
+  <packageName>com.rulesengine</packageName>
+  <imports>
+    <imports/>
+  </imports>
+  <ksessions>
+    <string>defaultKieSession</string>
+  </ksessions>
+</scenario>

@@ -1,0 +1,21 @@
+package com.rulesengine;
+
+import java.lang.Number;
+
+rule "GRule2_Email TotalApproveRange"
+	dialect "java"
+	salience 0
+	when
+		OrdR : OrderRequest( emailTotalApproves == null || ( emailTotalApproves >= 0 && emailTotalApproves <= 150 ))
+	then
+		AuditTrail aud = new AuditTrail();
+		aud.setRule( "GRule2_EmailTotalApprove Fired" );
+		aud.setScore( 100 );
+		aud.setAction( "None" );
+		aud.setNotes( "EmailTotalApprove Fired" );
+		aud.setVersion( "1" );
+		insert( aud );
+		OrdR.getAudit().add(aud);
+		OrdR.setAction( "None" );
+		OrdR.setNotes( "EmailTotalApprove Fired" );
+end

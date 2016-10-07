@@ -1,0 +1,14 @@
+package com.rulesengine;
+
+import java.lang.Number;
+
+rule "GRuleTest"
+	dialect "java"
+	when
+		order : OrderRequest( dollarAmount >= 0 && dollarAmount <= 100 && CCCountry == "US" )
+	then
+		AuditTrail aud = new AuditTrail();
+		aud.setScore( 100 );
+		aud.setAction( "None" );
+		insert( aud );
+end

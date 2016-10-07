@@ -1,0 +1,62 @@
+<scenario>
+  <name>Rule1 Row2.scenario</name>
+  <maxRuleFirings>100000</maxRuleFirings>
+  <globals/>
+  <fixtures>
+    <fact-data>
+      <type>OrderRequest</type>
+      <fieldData>
+        <field-data>
+          <name>CCCountry</name>
+          <value>VE</value>
+          <nature>4</nature>
+        </field-data>
+        <field-data>
+          <name>dollarAmount</name>
+          <value>100</value>
+          <nature>4</nature>
+        </field-data>
+        <field-data>
+          <name>billingName</name>
+          <value>John doe</value>
+          <nature>4</nature>
+        </field-data>
+      </fieldData>
+      <name>order</name>
+      <isModify>false</isModify>
+    </fact-data>
+    <execution-trace>
+      <executionTimeResult>76</executionTimeResult>
+      <numberOfRulesFired>1</numberOfRulesFired>
+    </execution-trace>
+    <expect-fact>
+      <fieldValues>
+        <expect-field>
+          <fieldName>action</fieldName>
+          <expected>None</expected>
+          <successResult>true</successResult>
+          <explanation>[OrderRequest] field [action] was [None].</explanation>
+          <operator>==</operator>
+          <nature>1</nature>
+        </expect-field>
+      </fieldValues>
+      <name>OrderRequest</name>
+      <anonymous>true</anonymous>
+    </expect-fact>
+  </fixtures>
+  <lastRunResult>2016-09-30 04:44:28.321 UTC</lastRunResult>
+  <rules>
+    <string>GRule1_BillingCountryCheck</string>
+    <string>GRule1_CountryCheck</string>
+    <string>GRule1_NullCheck</string>
+    <string>GRule1_DollarAmountCheck</string>
+  </rules>
+  <inclusive>true</inclusive>
+  <packageName>com.rulesengine</packageName>
+  <imports>
+    <imports/>
+  </imports>
+  <ksessions>
+    <string>defaultKieSession</string>
+  </ksessions>
+</scenario>

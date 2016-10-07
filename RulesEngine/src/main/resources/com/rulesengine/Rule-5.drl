@@ -1,0 +1,25 @@
+package com.rulesengine;
+
+import java.lang.Number;
+
+rule "Rule5"
+	dialect "mvel"
+	agenda-group "country"
+	when
+		OrderReq: OrderRequest( )
+		Bil: Billing( ) from OrderReq.billing
+		Add: Address(countryName == "US" ) from Bil.address
+		
+		
+	then
+	
+	        AuditTrail trail = new AuditTrail();
+        	trail.setRule("Rule5");
+            trail.setAction("None");
+            trail.setNotes("BillingCountry US");
+            trail.setScore(-100);
+        OrderReq.getAudit().add(trail);
+        OrderReq.setNotes( "OK" );
+        insert( OrderReq );
+end
+

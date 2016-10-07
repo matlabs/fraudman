@@ -1,0 +1,66 @@
+<scenario>
+  <name>Rule5 Test.scenario</name>
+  <maxRuleFirings>100000</maxRuleFirings>
+  <globals/>
+  <fixtures>
+    <fact-data>
+      <type>OrderRequest</type>
+      <fieldData>
+        <field-data>
+          <fieldName>billing</fieldName>
+          <fact>
+            <type>Billing</type>
+            <fieldData>
+              <field-data>
+                <fieldName>address</fieldName>
+                <fact>
+                  <type>Address</type>
+                  <fieldData>
+                    <field-data>
+                      <name>countryName</name>
+                      <value>US</value>
+                      <nature>4</nature>
+                    </field-data>
+                  </fieldData>
+                </fact>
+              </field-data>
+            </fieldData>
+          </fact>
+        </field-data>
+      </fieldData>
+      <name>order</name>
+      <isModify>false</isModify>
+    </fact-data>
+    <execution-trace>
+      <executionTimeResult>100</executionTimeResult>
+      <numberOfRulesFired>1</numberOfRulesFired>
+    </execution-trace>
+    <expect-fact>
+      <fieldValues>
+        <expect-field>
+          <fieldName>notes</fieldName>
+          <expected>OK</expected>
+          <actualResult></actualResult>
+          <successResult>true</successResult>
+          <explanation>[order] field [notes] was [OK].</explanation>
+          <operator>==</operator>
+          <nature>1</nature>
+        </expect-field>
+      </fieldValues>
+      <name>order</name>
+      <anonymous>false</anonymous>
+    </expect-fact>
+  </fixtures>
+  <lastRunResult>2016-09-17 06:15:27.738 UTC</lastRunResult>
+  <rules>
+    <string>Rule5</string>
+  </rules>
+  <inclusive>true</inclusive>
+  <packageName>com.rulesengine</packageName>
+  <imports>
+    <imports/>
+  </imports>
+  <ksessions>
+    <string>defaultKieSession</string>
+  </ksessions>
+</scenario>

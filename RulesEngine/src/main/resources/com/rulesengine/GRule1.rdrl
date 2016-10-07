@@ -1,0 +1,14 @@
+package com.rulesengine;
+
+import java.lang.Number;
+
+rule "null"
+	dialect "mvel"
+	when
+		OrderRequest( bill : billing, add : billing.address, country : billing.address.countryName == "US" )
+		OrderRequest( )
+	then
+		OrderRequest fact0 = new OrderRequest();
+		fact0.setNotes( "Country US" );
+		insert( fact0 );
+end

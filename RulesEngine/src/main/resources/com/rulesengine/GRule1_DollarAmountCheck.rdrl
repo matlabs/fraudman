@@ -1,0 +1,20 @@
+package com.rulesengine;
+
+import java.lang.Number;
+
+rule "GRule1_DollarAmountCheck" extends "GRule1_CountryCheck"
+	dialect "java"
+	when
+		OrdRe : OrderRequest( dollarAmount >= 50 && dollarAmount <= 150 )
+	then
+		AuditTrail aud = new AuditTrail();
+		aud.setRule( "GRule1_MeetAllCriteria" );
+		aud.setScore( 100 );
+		aud.setAction( "Automatic Approval" );
+		aud.setNotes( "Meets all conditions" );
+		aud.setVersion( "1" );
+		insert( aud );
+		OrdRe.getAudit().add(aud);
+		OrdRe.setAction( "Automatic Approval" );
+		OrdRe.setNotes( "Meets all conditions" );
+end

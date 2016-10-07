@@ -1,0 +1,20 @@
+package com.rulesengine;
+
+import java.lang.Number;
+
+rule "GRule1_NullCheck"
+	dialect "java"
+	when
+		OrdR : OrderRequest( CCCountry == null || billingCountry == null || IPCountry == null || dollarAmount == null || billingName == null )
+	then
+		AuditTrail aud = new AuditTrail();
+		aud.setRule( "GRule1_NullCheck" );
+		aud.setScore( 100 );
+		aud.setAction( "None" );
+		aud.setNotes( "Null Check " );
+		aud.setVersion( "1" );
+		insert( aud );
+		OrdR.getAudit().add(aud);
+		OrdR.setAction( "None" );
+		OrdR.setNotes( "Null Check " );
+end
